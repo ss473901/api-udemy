@@ -1,4 +1,5 @@
 const express = require("express");
+const { add } = require("nodemon/lib/rules");
 const app = express();
 const PORT = 4000;
 
@@ -47,5 +48,17 @@ app.post("/api/customers", (req, res) => {
   res.send(customer);
 });
 
+//顧客情報の更新
+app.put("/api/customers/:id", (req, res) => {
+  const customer = customers.find((c) => c.id === parseInt(req.params.id));
+  customer.title = req.body.title;
+  res.send(customer);
+});
 
-
+//顧客情報の削除
+app.delete("/api/customers/:id", (req, res) => {
+  const customer = customers.find((c) => c.id === parseInt(req.params.id));
+  const index = customers.indexOf(customer);
+  customers.splice(index, 1);
+  res.send(customer);
+});
